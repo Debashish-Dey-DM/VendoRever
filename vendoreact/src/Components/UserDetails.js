@@ -26,16 +26,44 @@ const rows = [
 
 
 export default function UserDetails() {
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [bkash, setbkash] = useState("");
+  const [nagad, setnagad] = useState("");
+  const [rocket, setrocket] = useState("");
+  const [name, setname] = useState("");
+  
+
+
+
+
+
+
+
   const [user, setuser] = useState([]);
       const mount = async () => {
         const res = await axios.get('http://localhost:8000/api/user/Homepage');
         console.log(res.data);
+        const data = JSON.parse(localStorage.getItem("user-info"));
+        console.log(data)
+        if (data) {
+        setemail(data.email)
+        setname(data.name)
+        setphone(data.phone)
+        setbkash(data.bkash)
+        setnagad(data.nagad)
+        setrocket(data.rocket)
+        }
+        
+        
         
         if (res.status === 200) {
-            setuser(res.data)
+          setuser(res.data)
+          
             
         }
   }
+  
   
     useEffect(() => {
     mount();
@@ -50,50 +78,47 @@ export default function UserDetails() {
     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
     </Stack>
     </div>
-    
+      
     <TableContainer component={Paper}>
       
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            {
-              user.map((e) => {
-                return (
-                  <TableHead key={e.id}>
+           
+                  
+                  <TableHead >
               <TableRow>
                 <TableCell>Name</TableCell>
-                      <TableCell align="right">{e.name}</TableCell>
+                      <TableCell align="right">{name ? name : "edit"}</TableCell>
             
                     </TableRow>
                     <TableRow>
                 <TableCell>Phone</TableCell>
-                      <TableCell align="right">{e.phone}</TableCell>
+                      <TableCell align="right">{phone}</TableCell>
                 
                     </TableRow>
                     
                      <TableRow>
                 <TableCell>email</TableCell>
-                      <TableCell align="right">{e.email}</TableCell>
+                      <TableCell align="right">{email}</TableCell>
                 
                     </TableRow>
                      <TableRow>
                 <TableCell>bkash</TableCell>
-                      <TableCell align="right">{e.bkash}</TableCell>
+                      <TableCell align="right">{bkash}</TableCell>
                 
                     </TableRow>
                          <TableRow>
                 <TableCell>Nagad</TableCell>
-                      <TableCell align="right">{e.nagad}</TableCell>
+                      <TableCell align="right">{nagad}</TableCell>
                 
                     </TableRow>
                          <TableRow>
                 <TableCell>Rocket</TableCell>
-                      <TableCell align="right">{e.rocket}</TableCell>
+                      <TableCell align="right">{rocket}</TableCell>
                 
               </TableRow>
                   </TableHead>
                   
-                );
-              })
-              }
+             
         
       </Table>
             </TableContainer>

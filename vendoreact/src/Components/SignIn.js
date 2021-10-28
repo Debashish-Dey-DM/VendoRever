@@ -25,7 +25,15 @@ const bull = (
 
 
 export default function SignIn() {
+
   const history = useHistory();
+  useEffect(() => {
+    if(localStorage.getItem("user-info"))
+    {
+     setTimeout(() => { history.push('/user/Homepage'); }, 0);  
+        }
+     }, []);
+  
   const [user, setUser] = useState({
     email: '',
     password: ''
