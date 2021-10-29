@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const bull = (
   <Box
@@ -23,7 +24,13 @@ const bull = (
 
 
 export default function Signup() {
-
+  const history = useHistory();
+  useEffect(() => {
+    if(localStorage.getItem("user-info"))
+    {
+     setTimeout(() => { history.push('/user/Homepage'); }, 0);  
+        }
+     }, []);
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -43,7 +50,7 @@ export default function Signup() {
     const res = await axios.post(`http://localhost:8000/api/signup`, { name: name, email: email, phone: phone, password: password });
     if (res.data.status === 200) {
       console.log(res.data.message);
-
+      history.push("/signin")
     }
     else {
       console.log("neh tumse na ho payega");

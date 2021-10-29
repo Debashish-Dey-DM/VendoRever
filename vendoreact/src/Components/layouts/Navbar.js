@@ -15,6 +15,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { useState,useEffect } from 'react';
+import { useHistory } from 'react-router';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -57,6 +60,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const history = useHistory();
+  const [name, setName] = useState("") 
+  useEffect(() => {
+     const data = JSON.parse(localStorage.getItem("user-info"));
+    if (data) {
+      setName(data.name)
+    }
+    else {
+      setName("Nothing")
+    }
+        
+     }, []);
+
+ 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -80,6 +97,11 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const Logout = () => {
+    localStorage.clear();
+     history.push('/signin')
+  }
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -97,8 +119,17 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      { 
+        localStorage.getItem("user-info") ?
+          <>
+            <MenuItem onClick={handleMenuClose}>{name}</MenuItem>
+            <MenuItem onClick={Logout}>Logout</MenuItem>
+          </>
+          :
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      }
+      
+      
     </Menu>
   );
 
