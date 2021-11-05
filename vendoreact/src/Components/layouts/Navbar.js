@@ -17,7 +17,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { useState,useEffect } from 'react';
 import { useHistory } from 'react-router';
-
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { Link } from 'react-router-dom';
+import GroupIcon from '@mui/icons-material/Group';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,11 +63,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Navbar() {
   const history = useHistory();
-  const [name, setName] = useState("") 
+  const [name, setName] = useState("")
+  const [type,settype] = useState("")
   useEffect(() => {
      const data = JSON.parse(localStorage.getItem("user-info"));
     if (data) {
       setName(data.name)
+      settype(data.type)
     }
     else {
       setName("Nothing")
@@ -218,8 +222,33 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
+              <Badge color="error">
+                {/* badgeContent={4} */}
+               
+                <Link to ={'/user/UserList'} > <h7>All Users</h7> </Link>
+              </Badge>
+            </IconButton>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge color="error">
+                {/* badgeContent={4} */}
+               
+                <Link to ={'/user/SentRequest'} > <h7>Friend Request Sent</h7> </Link>
+              </Badge>
+            </IconButton>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge color="error">
+                {/* badgeContent={4} */}
+               
+                <Link to ={'/user/Friendlist'} > <GroupIcon/> </Link>
+              </Badge>
+            </IconButton>
+
+
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge color="error">
+                {/* badgeContent={4} */}
+               
+                <Link to ={'/user/FriendReq'} >  <PersonAddIcon /> </Link>
               </Badge>
             </IconButton>
             <IconButton
