@@ -7,6 +7,9 @@ import Signup from './Components/Signup';
 import SignIn from './Components/SignIn';
 import { Test } from './Components/Test';
 import { Protected } from './Components/Protected';
+import { FriendList } from './Components/FriendList';
+import { FriendRequest } from './Components/FriendRequest';
+import { SentRequest } from './Components/SentRequest';
 function App() {
   return (
     <div className="App">
@@ -25,7 +28,10 @@ function App() {
           {/* <Route path="/user/UserList" component={UserList} /> */}
           <Route path="/Signup" component={Signup} />
           <Route path="/SignIn" component={SignIn} />
-          <Route path="/test" component={Test}/>
+          <Route path="/test" component={Test} />
+          <Route path="/user/FriendReq" component={FriendRequest} />
+          <Route path="/user/Friendlist" component={FriendList} />
+          <Route path="/user/SentRequest" component={SentRequest} />
           </Switch>
       </Router>
     </div>

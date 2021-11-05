@@ -5,14 +5,22 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import Stack from '@mui/material/Stack';
-export default function OnlyList() {
-  const [current, setcurrent] = useState("");
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import OnlyList from './OnlyList';
+import Navbar from './layouts/Navbar';
+
+export const FriendList = () => {
+     const [current, setcurrent] = useState("");
   const [user, setuser] = useState([]);
   const mount = async () => {
          const data = JSON.parse(localStorage.getItem("user-info"));
@@ -21,7 +29,7 @@ export default function OnlyList() {
            setcurrent(data.name);
            const id = data.id;
 
-        const res = await axios.get(`http://localhost:8000/api/UserList/${id}`);
+        const res = await axios.get(`http://localhost:8000/api/friendList/${id}`);
         console.log(res.data);
 
         if (res.status === 200) {
@@ -39,19 +47,35 @@ export default function OnlyList() {
         
     }, []);
   
-  
-  return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+   
+   
+    return (
+        <div>
+            <Navbar/>
+      <div style={{
+        display: 'flex', justifyContent: 'center'
+      }}>
+    <Card sx={{ maxWidth: 700}}>
+      
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+Friend List        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Here Is the List of All users That You have sent friend Request . Now you can choose your vendor mates, make a group with them
+          and you can sell products together to a shop
+        </Typography>
+                        {/*list*/}
+        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {
         user.map((e) => {
           return (
             <>
               <ListItem alignItems="flex-start">
         <ListItemAvatar>
-                  <Avatar alt={!(current === e.name)?e.email: <> <del>{e.name}</del> </> } src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={e.name} src="/static/images/avatar/1.jpg" />
         </ListItemAvatar>
         <ListItemText
-          primary={!(current === e.name)?e.name: <> <del>{e.name}</del> </> }
+          primary={e.name }
           secondary={
             <React.Fragment>
               <Typography
@@ -62,20 +86,11 @@ export default function OnlyList() {
               >
                
               </Typography>
-              {!(current === e.name) ? e.email : <> <del>{e.email}</del> </>}
+              {e.email}
 
-              {
-                !(current === e.name) ?
-                  
-              <Stack direction="row" spacing={4}>
-                <ClearIcon />
-                 <DoneIcon/>
-                  </Stack>
-                  :
-                  <h5>Damm its you man</h5>
-                }
+              
               <div>
-                
+                <Button> <ClearIcon /> </Button> 
                 
               </div>
             </React.Fragment>
@@ -89,6 +104,17 @@ export default function OnlyList() {
         })
       }
       
-    </List>
+    </List>               
+
+
+                        {/* end*/}                 
+      </CardContent>
+      <CardActions>
+        <Button size="small">Share</Button>
+        <Button size="small">Learn More</Button>
+      </CardActions>
+            </Card>
+            </div>
+            </div>
   );
 }
