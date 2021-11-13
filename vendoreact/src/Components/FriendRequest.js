@@ -46,8 +46,10 @@ export const FriendRequest = () => {
     mount();
         
     }, []);
-  
-   
+    
+  const acceptRequest = async () => {
+    
+  }
    
     return (
         <div>
@@ -87,10 +89,21 @@ Friend Requests      </Typography>
                
               </Typography>
               {e.email}
-
+              {e.user_id_1}
               
               <div>
-                <Button> <ClearIcon /> </Button> 
+                <Button onClick={async () => {
+  
+                    
+                  const res = await axios.post(`http://localhost:8000/api/accept/${e.id}`);
+                if (res.data.status === 200) {
+                 mount();
+                }
+                else {
+                  console.log(e.id);
+                  console.log(res.data.status);
+                }
+                }}> <ClearIcon /> </Button> 
                 
               </div>
             </React.Fragment>

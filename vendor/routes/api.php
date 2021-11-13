@@ -26,3 +26,5 @@ Route::get('/friendList/{id}','userController@friendList');
 Route::get('/RequestSent/{id}','userController@RequestSent');
 Route::get('/friendRequest/{id}','userController@friendRequest');
 Route::get('/UserList/{id}','userController@testUserList');
+Route::post('/accept/{id}','userController@MakeFriend');
+//Route::get('/UserList/{id}','userController@testUserList2');
