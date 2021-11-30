@@ -194,4 +194,25 @@ public function MakeFriend(Request $req , $id){
       ]);
     }
 }
+public function sentReq(Request $req,$id,$uid){
+  $data=array();
+  $data['user_id_1'] = $id;
+  $data['user_id_2'] = $uid;
+  $data['type'] = '0';
+  $data['status'] = '1';
+  $insert_friend = DB::table('friends')->insert($data);
+  if($insert_friend){
+    return response()->json([
+      'status'=>200,
+      'message' => 'Friend Request Send'
+    ]);
+  }
+  else{
+    return response()->json([
+      'status' => 202,
+      'message' => 'chal chutiye'
+    ]);
+  }
+ 
+}
 }

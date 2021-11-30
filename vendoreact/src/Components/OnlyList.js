@@ -11,6 +11,7 @@ import axios from 'axios';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 export default function OnlyList() {
   const [current, setcurrent] = useState("");
   const [user, setuser] = useState([]);
@@ -68,8 +69,14 @@ export default function OnlyList() {
                 !(current === e.name) ?
                   
               <Stack direction="row" spacing={4}>
-                <ClearIcon />
-                 <DoneIcon/>
+                    <ClearIcon />
+                    <Button onClick={
+                      console.log(e.id)
+                    }>
+                      <DoneIcon />
+                      </Button>
+                    
+                    
                   </Stack>
                   :
                   <h5>Damm its you man</h5>

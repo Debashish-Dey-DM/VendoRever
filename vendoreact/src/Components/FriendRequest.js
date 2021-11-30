@@ -95,7 +95,7 @@ Friend Requests      </Typography>
                 <Button onClick={async () => {
   
                     
-                  const res = await axios.post(`http://localhost:8000/api/accept/${e.id}`);
+                const res = await axios.post(`http://localhost:8000/api/accept/${e.id}`);
                 if (res.data.status === 200) {
                  mount();
                 }
@@ -103,7 +103,7 @@ Friend Requests      </Typography>
                   console.log(e.id);
                   console.log(res.data.status);
                 }
-                }}> <ClearIcon /> </Button> 
+                }}> <DoneIcon/> </Button> 
                 
               </div>
             </React.Fragment>
