@@ -27,6 +27,9 @@ class userController extends Controller
     $data['phone']= $req->phone;
     $data['email']= $req->email;
     $data['password']= $req->password;
+    $data['type']= 0;
+    $data['status']= 1;
+
     $insert_user = DB::table('users')->insert($data);
     if($insert_user){
       return response()->json([
@@ -83,6 +86,27 @@ class userController extends Controller
     }
     
    
+  }
+  public function updateUser(Request $req,$id){
+    $data=array();
+    $data['bkash']= $req->bkash;
+    $data['nagad']= $req->nagad;
+    $data['rocket']= $req->rocket;
+    $update_user = DB::table('users')->where('id',$id)->update($data);
+    if($update_user){
+      return response()->json([
+        'status'=>200,
+        'user'=> $update_user,
+        'message' => 'User Updated Successfully'
+      ]);
+    }
+    else{
+      return response()->json([
+        'status' => 202,
+        'message' => 'unsuccessfull'
+      ]);
+    }
+    
   }
   public function friendList(Request $req, $id){
       $friends = DB::table('friends')

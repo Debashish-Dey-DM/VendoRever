@@ -10,42 +10,72 @@ import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import { useState, useEffect } from 'react';
-
+import { Button } from '@mui/material';
+import { useHistory } from 'react-router';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Phone', 1315092923),
-  createData('email', "walter@gmail.com"),
-  createData('bkash', 1315092923),
-  createData('Nagad', 1315092923),
-  createData('Rocket', 1315092923),
-];
+
 
 
 export default function UserDetails() {
+  const history = useHistory();
+  const [id,setId] = useState('');
   const [email, setemail] = useState("");
+  const [password,setPassword] = useState("");
   const [phone, setphone] = useState("");
   const [bkash, setbkash] = useState("");
   const [nagad, setnagad] = useState("");
   const [rocket, setrocket] = useState("");
   const [name, setname] = useState("");
-  
+  const [form, setform] = useState("show");
+  const [iuser, setIuser] = useState({
+    bkash: '',
+    nagad: '',
+    rocket: '',
+  });
+ 
 
 
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setIuser({ ...iuser, [name]: [value] });
+    console.log(name,value);
+    
+  }
 
-
+  const submitData = async (e) => {
+    e.preventDefault();
+    const nbkash = iuser.bkash.toString();
+    const nnagad = iuser.nagad.toString();
+    const nrocket = iuser.rocket.toString();
+    const uid = id.toString();
+    
+    
+    const res = await axios.post(`http://localhost:8000/api/user/UserList/${uid}`, { bkash: nbkash, nagad: nnagad, rocket: nrocket });
+    if(res.data.status === 200){
+      
+      alert("Data Updated Please Login Again");
+        localStorage.clear();
+     history.push('/signin')
+    }
+    else{
+      alert("Error");
+    }
+  }
 
 
 
   const [user, setuser] = useState([]);
       const mount = async () => {
-        const res = await axios.get('http://localhost:8000/api/user/Homepage');
-        console.log(res.data);
+       
         const data = JSON.parse(localStorage.getItem("user-info"));
+       
         console.log(data)
+        
         if (data) {
         setemail(data.email)
         setname(data.name)
@@ -53,15 +83,16 @@ export default function UserDetails() {
         setbkash(data.bkash)
         setnagad(data.nagad)
         setrocket(data.rocket)
+          setId(data.id)
+          setPassword(data.password)
+
         }
-        
-        
-        
-        if (res.status === 200) {
-          setuser(res.data)
-          
-            
+        if(data.bkash&&data.nagad&&data.rocket){
+          setform("hide")
         }
+      
+        
+       
   }
   
   
@@ -78,7 +109,7 @@ export default function UserDetails() {
     <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
     </Stack>
     </div>
-      
+      <form onSubmit={submitData}>
     <TableContainer component={Paper}>
       
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -103,25 +134,46 @@ export default function UserDetails() {
                     </TableRow>
                      <TableRow>
                 <TableCell>bkash</TableCell>
-                      <TableCell align="right">{bkash}</TableCell>
+                      <TableCell align="right">{bkash ? bkash : <><input type="text" name ="bkash" onChange={handleInput} /> </>}</TableCell>
                 
                     </TableRow>
                          <TableRow>
                 <TableCell>Nagad</TableCell>
-                      <TableCell align="right">{nagad}</TableCell>
+                      <TableCell align="right">{nagad ? nagad : <><input type="text" name ="nagad" onChange={handleInput} /> </>}</TableCell>
                 
                     </TableRow>
-                         <TableRow>
+                    <TableRow>
                 <TableCell>Rocket</TableCell>
-                      <TableCell align="right">{rocket}</TableCell>
+                      <TableCell align="right">{rocket ? rocket : <><input type="text" name ="rocket" onChange={handleInput} /> </>}</TableCell>
+                
+                </TableRow>
+                {
+                  form==="show" ? 
+                  <>
+                     <TableRow>
+                <TableCell>-</TableCell>
+                        <TableCell align="right">
+                          <Button variant="contained" type="submit">Submit</Button>
+                          
+                        </TableCell>
                 
               </TableRow>
+                    </>
+                    :
+                    <>
+                      
+                    </>
+                    
+                }
                   </TableHead>
                   
              
         
-      </Table>
-            </TableContainer>
+          </Table>
+          
+          </TableContainer>
+          </form>
+            
             </>
   );
 }

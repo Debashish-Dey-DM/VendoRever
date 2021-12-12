@@ -19,6 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/user/Homepage','userController@index');
 Route::get('/user/UserList','userController@userList');
+Route::post('/user/UserList/{id}','userController@updateUser');
 Route::post('/signup','userController@createUser');
 Route::post('/signin','userController@signin');
 // Route::get('/friends/{id}/{fid}','userController@MakeFriend');
@@ -29,4 +30,5 @@ Route::get('/UserList/{id}','userController@testUserList');
 Route::post('/accept/{id}','userController@MakeFriend');
 //Route::post('/reject/{id}','userController@RejectFriend');
 Route::post('/sent/{id}/{uid}','userController@sentReq');
+
 //Route::get('/UserList/{id}','userController@testUserList2');
