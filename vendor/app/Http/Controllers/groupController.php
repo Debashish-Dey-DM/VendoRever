@@ -66,4 +66,20 @@ class groupController extends Controller
         ->get();
         return response()->json($group, 200);
 }
+//     public function groupMembers(Request $request,$id)
+//     {
+//         $member = DB::table('members')
+//         ->where('Group_id',$id)
+//         ->get();
+//         return response()->json($member, 200);
+// }
+    public function groupMembers(Request $request,$id)
+    {
+        $member = DB::table('members')
+        ->leftJoin('users', 'users.id', '=', 'members.User_id')
+        ->select('members.*', 'users.name')
+        ->where('members.Group_id',$id)
+        ->get();
+        return response()->json($member, 200);
+}
 }
