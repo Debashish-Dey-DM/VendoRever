@@ -18,10 +18,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import OnlyList from './OnlyList';
 import Navbar from './layouts/Navbar';
+import { Link } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export const FriendList = () => {
      const [current, setcurrent] = useState("");
   const [user, setuser] = useState([]);
+  const [group, setgroup] = useState([]);
   const mount = async () => {
          const data = JSON.parse(localStorage.getItem("user-info"));
          if (data) {
@@ -36,7 +39,12 @@ export const FriendList = () => {
             setuser(res.data)
             
         }
-
+        const res2 = await axios.get(`http://localhost:8000/api/groupList/${id}`);
+           console.log(res2.data.status);
+            if (res2.status === 200) {
+                setgroup(res2.data)
+                console.log("success");
+            }
            
         }
 
@@ -59,7 +67,8 @@ export const FriendList = () => {
       
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-Friend List        </Typography>
+                Friend List        </Typography>
+             
         <Typography variant="body2" color="text.secondary">
           Here Is the List of All users That You have sent friend Request . Now you can choose your vendor mates, make a group with them
           and you can sell products together to a shop
@@ -113,7 +122,57 @@ Friend List        </Typography>
         <Button size="small">Share</Button>
         <Button size="small">Learn More</Button>
       </CardActions>
-            </Card>
+          </Card>
+          <Card sx={{ maxWidth: 700}}>
+            <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                Group List        </Typography>
+              <Link to ={'/user/createGroup'} > <h5>Create Group</h5> </Link>
+        <Typography variant="body2" color="text.secondary">
+          Here Is the List of All Groups That You have created . Now you can add your vendor mates into groups
+              </Typography>
+                      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      {
+        group.map((e) => {
+          return (
+            <>
+              
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar alt={e.Group_name} src="/static/images/avatar/1.jpg" />
+               </ListItemAvatar>
+                <ListItemText
+          primary={e.Group_name }
+          secondary={
+            <React.Fragment>
+              <Typography
+                sx={{ display: 'inline' }}
+                component="span"
+                variant="body2"
+                color="text.primary"
+              >
+               
+              </Typography>
+              {e.Group_description}
+              <div>  <Link to ={`/user/group/${e.id}`} > <VisibilityIcon /> </Link></div>
+              
+              
+            </React.Fragment>
+          }
+        />
+             </ListItem>
+              
+      
+            </>
+          );
+        })
+      }
+      
+    </List>   
+
+              
+            </CardContent>
+          </Card>
             </div>
             </div>
   );
