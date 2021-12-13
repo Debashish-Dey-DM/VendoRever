@@ -225,14 +225,14 @@ export default function Navbar() {
               <Badge color="error">
                 {/* badgeContent={4} */}
                
-                <Link to ={'/user/UserList'} > <h7>All Users</h7> </Link>
+                <Link to ={'/user/UserList'} > <h5>All Users</h5> </Link>
               </Badge>
             </IconButton>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
               <Badge color="error">
                 {/* badgeContent={4} */}
                
-                <Link to ={'/user/SentRequest'} > <h7>Friend Request Sent</h7> </Link>
+                <Link to ={'/user/SentRequest'} > <h5>Friend Request Sent</h5> </Link>
               </Badge>
             </IconButton>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">

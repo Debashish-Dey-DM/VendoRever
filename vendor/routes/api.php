@@ -32,3 +32,8 @@ Route::post('/accept/{id}','userController@MakeFriend');
 Route::post('/sent/{id}/{uid}','userController@sentReq');
 
 //Route::get('/UserList/{id}','userController@testUserList2');
+
+//Group Routes
+Route::post('/createGroup/{id}','groupController@createGroup');
+Route::get('/groupList/{id}','groupController@groupList');
+Route::get('/group/{id}','groupController@group');
