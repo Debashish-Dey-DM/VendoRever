@@ -33,7 +33,8 @@ class groupController extends Controller
         $insert = DB::table('groups')->insert($data);
         if($insert)
         {
-            return response()->json([
+            
+         return response()->json([
         'status'=>200,
         'group'=> $insert,
         'message' => 'User Added Successfully'
@@ -46,8 +47,12 @@ class groupController extends Controller
     }
     public function groupList(Request $request,$id)
     {
+        $ismember = DB::table('members')
+        ->where('user_id',$id)
+        ->pluck('Group_id');
         $group = DB::table('groups')
         ->where('Group_admin',$id)
+        ->orWhereIn('id',$ismember)
         ->get();
         if($group)
         {
@@ -58,6 +63,7 @@ class groupController extends Controller
         {
             return response()->json(['error'=>'Something went wrong']);
         }
+       
     }
     public function group(Request $request,$id)
     {
@@ -66,4 +72,32 @@ class groupController extends Controller
         ->get();
         return response()->json($group, 200);
 }
+
+    public function groupMembers(Request $request,$id)
+    {
+        $member = DB::table('members')
+        ->leftJoin('users', 'users.id', '=', 'members.User_id')
+        ->select('members.*', 'users.name')
+        ->where('members.Group_id',$id)
+        ->get();
+        return response()->json($member, 200);
+}
+public function test(Request $request,$id)
+    {
+        $admin = DB::table('groups')
+        ->where('id',$id)
+        ->pluck('Group_admin');
+        $adminName = DB::table('users')
+        ->where('id',$admin)
+        ->pluck('name');
+        $member = DB::table('members')
+        ->leftJoin('users', 'users.id', '=', 'members.user_id')
+        ->select('members.*', 'users.name')
+        ->where('members.Group_id',$id)
+        ->get();
+
+
+         return response()->json([ 'member'=>$member,'admin'=>$adminName ,'adminId'=>$admin,  'message' => 'Something went wrong' ]);
+}
+
 }

@@ -37,3 +37,5 @@ Route::post('/sent/{id}/{uid}','userController@sentReq');
 Route::post('/createGroup/{id}','groupController@createGroup');
 Route::get('/groupList/{id}','groupController@groupList');
 Route::get('/group/{id}','groupController@group');
+Route::get('group/members/{id}','groupController@groupMembers');
+Route::get('/testList/{id}','groupController@test');
