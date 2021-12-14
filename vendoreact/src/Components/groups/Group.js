@@ -40,6 +40,7 @@ export const Group = () => {
             console.log(res.data);
             if(res2.status ===200){
                 setuser(res2.data);
+                
             }
         }
         const res3 = await axios.get(`http://localhost:8000/api/group/members/${gid}`);
@@ -56,19 +57,29 @@ export const Group = () => {
         <div>
             <NewNavbar />
             
+            
         {
                 group.map((e) => {
+                    
                     return (
+                        
                         <> 
-                            <div style={{
+                            {isadmin === e.Group_admin ?
+                                                                   <div style={{
                             display: 'flex', justifyContent: 'center'
                             }}>
                             
-                            <Card style={{ width: '50%', marginTop: '10px' }} sx={{ maxWidth: 700 }}>
+                                <Card style={{ width: '50%', marginTop: '10px' }} sx={{ maxWidth: 700 }}>
+                                    
                                 <h1>{e.Group_name}</h1>
                                 <p>{e.Group_description}</p>
+                                <h2>ADMIN---{e.name}</h2>
                                 </Card>
                                 </div>
+                                        :
+                                        <h1>{"Invalid Group Request"}</h1>
+                                }
+
                         
                         </>
                     )

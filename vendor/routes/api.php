@@ -39,3 +39,4 @@ Route::get('/groupList/{id}','groupController@groupList');
 Route::get('/group/{id}','groupController@group');
 Route::get('group/members/{id}','groupController@groupMembers');
 Route::get('/testList/{id}','groupController@test');
+Route::post('/createmember/{id}/{mid}','groupController@createmember');

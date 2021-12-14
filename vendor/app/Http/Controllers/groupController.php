@@ -68,7 +68,10 @@ class groupController extends Controller
     public function group(Request $request,$id)
     {
         $group = DB::table('groups')
-        ->where('id',$id)
+         ->leftJoin('users', 'users.id', '=', 'groups.Group_admin')
+         ->select('groups.*','users.name')
+        ->where('groups.id',$id)
+        
         ->get();
         return response()->json($group, 200);
 }
@@ -100,4 +103,15 @@ public function test(Request $request,$id)
          return response()->json([ 'member'=>$member,'admin'=>$adminName ,'adminId'=>$admin,  'message' => 'Something went wrong' ]);
 }
 
+public function createmember(Request $req,$id,$mid)
+{   
+    $userID="";
+    $user= DB::table('users')
+            ->where('id',$id)
+            ->get();
+    foreach ($user as $u){
+            $userID = $u->id;
+}           
+echo $userID;
+}
 }
