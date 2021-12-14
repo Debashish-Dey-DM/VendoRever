@@ -94,7 +94,7 @@ export const Group = () => {
                             display: 'flex', justifyContent: 'center'
                             }}>
                                 
-                                <h5>{!(isadmin ===e.id) ? e.name : <><del>{e.name}</del>  </>}</h5>
+                                <h5>{e.name}</h5>
                                 </div>
                         
                         </>
